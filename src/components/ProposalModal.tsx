@@ -67,7 +67,14 @@ export function ProposalModal({ service, onOpenChange }: ProposalModalProps) {
       }
 
       onOpenChange(false);
-      navigate({ to: "/proposal-sent" });
+      const env = getPaymentsEnvironment();
+      navigate({
+        to: "/proposal-sent",
+        search:
+          env === "sandbox" && result.hostedInvoiceUrl
+            ? { invoice: result.hostedInvoiceUrl }
+            : {},
+      });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unable to send your proposal.");
     } finally {

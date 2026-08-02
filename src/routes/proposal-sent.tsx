@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, Landmark, Mail, ShieldCheck } from "lucide-react";
+import { CheckCircle2, ExternalLink, Landmark, Mail, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -22,10 +22,19 @@ export const Route = createFileRoute("/proposal-sent")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  validateSearch: ProposalSentSearch,
   component: ProposalSent,
 });
 
+function ProposalSentSearch(search: Record<string, unknown>): { invoice?: string } {
+  const invoice = search["invoice"];
+  return typeof invoice === "string" && invoice.startsWith("https://")
+    ? { invoice }
+    : {};
+}
+
 function ProposalSent() {
+  const { invoice } = Route.useSearch();
   return (
     <div className="hero-surface flex min-h-screen flex-col">
       <header className="border-b border-border/60">
@@ -54,6 +63,23 @@ function ProposalSent() {
           reach out directly to your email within 24 hours of clearance to schedule your official
           project kickoff and onboarding session.
         </p>
+
+        {invoice ? (
+          <div className="mt-10 w-full rounded-lg border border-gold/40 bg-card/70 p-6 text-left">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-gold">Test mode</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Payments are still running in test mode, and test invoices are not delivered to real
+              inboxes. Your invoice was generated successfully — open it below to preview exactly
+              what your client will receive. Once you complete go-live in the Payments tab, invoices
+              are emailed automatically.
+            </p>
+            <Button variant="hairline" size="lg" className="mt-5" asChild>
+              <a href={invoice} target="_blank" rel="noopener noreferrer">
+                View the generated invoice <ExternalLink className="size-4" />
+              </a>
+            </Button>
+          </div>
+        ) : null}
 
         <div className="mt-12 grid w-full gap-4 sm:grid-cols-2">
           <div className="rounded-lg border border-border/70 bg-card/70 p-6 text-left">
