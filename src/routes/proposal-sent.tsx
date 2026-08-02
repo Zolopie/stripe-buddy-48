@@ -64,6 +64,23 @@ function ProposalSent() {
           project kickoff and onboarding session.
         </p>
 
+        {invoice ? (
+          <div className="mt-10 w-full rounded-lg border border-gold/40 bg-card/70 p-6 text-left">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-gold">Test mode</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Payments are still running in test mode, and test invoices are not delivered to real
+              inboxes. Your invoice was generated successfully — open it below to preview exactly
+              what your client will receive. Once you complete go-live in the Payments tab, invoices
+              are emailed automatically.
+            </p>
+            <Button variant="hairline" size="lg" className="mt-5" asChild>
+              <a href={invoice} target="_blank" rel="noopener noreferrer">
+                View the generated invoice <ExternalLink className="size-4" />
+              </a>
+            </Button>
+          </div>
+        ) : null}
+
         <div className="mt-12 grid w-full gap-4 sm:grid-cols-2">
           <div className="rounded-lg border border-border/70 bg-card/70 p-6 text-left">
             <Mail className="size-5 text-gold" />
