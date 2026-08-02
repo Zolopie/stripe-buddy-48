@@ -80,7 +80,7 @@ export async function syncCatalogToStripe(env: StripeEnv): Promise<CatalogSyncRe
       const amountMatches = existingPrices.data[0]?.unit_amount === amount;
 
       if (priceId && !amountMatches) {
-        await stripe.prices.update(priceId, { active: false, lookup_key: null });
+        await stripe.prices.update(priceId, { active: false });
         priceId = null;
       }
 
