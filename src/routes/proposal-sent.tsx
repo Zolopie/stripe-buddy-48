@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, Landmark, Mail, ShieldCheck } from "lucide-react";
+import { CheckCircle2, ExternalLink, Landmark, Mail, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -25,7 +25,15 @@ export const Route = createFileRoute("/proposal-sent")({
   component: ProposalSent,
 });
 
+function ProposalSentSearch(search: Record<string, unknown>): { invoice?: string } {
+  const invoice = search["invoice"];
+  return typeof invoice === "string" && invoice.startsWith("https://")
+    ? { invoice }
+    : {};
+}
+
 function ProposalSent() {
+  const { invoice } = Route.useSearch();
   return (
     <div className="hero-surface flex min-h-screen flex-col">
       <header className="border-b border-border/60">
