@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProposalSentRouteImport } from './routes/proposal-sent'
+import { Route as ApiPublicCatalogSyncRouteImport } from './routes/api/public/catalog-sync'
+import { Route as ApiPublicWebhooksStripeRouteImport } from './routes/api/public/webhooks/stripe'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,62 @@ const ProposalSentRoute = ProposalSentRouteImport.update({
   path: '/proposal-sent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCatalogSyncRoute = ApiPublicCatalogSyncRouteImport.update({
+  id: '/api/public/catalog-sync',
+  path: '/api/public/catalog-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWebhooksStripeRoute = ApiPublicWebhooksStripeRouteImport.update({
+  id: '/api/public/webhooks/stripe',
+  path: '/api/public/webhooks/stripe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/proposal-sent': typeof ProposalSentRoute
+  '/api/public/catalog-sync': typeof ApiPublicCatalogSyncRoute
+  '/api/public/webhooks/stripe': typeof ApiPublicWebhooksStripeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/proposal-sent': typeof ProposalSentRoute
+  '/api/public/catalog-sync': typeof ApiPublicCatalogSyncRoute
+  '/api/public/webhooks/stripe': typeof ApiPublicWebhooksStripeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/proposal-sent': typeof ProposalSentRoute
+  '/api/public/catalog-sync': typeof ApiPublicCatalogSyncRoute
+  '/api/public/webhooks/stripe': typeof ApiPublicWebhooksStripeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/proposal-sent'
+  fullPaths:
+    | '/'
+    | '/proposal-sent'
+    | '/api/public/catalog-sync'
+    | '/api/public/webhooks/stripe'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/proposal-sent'
-  id: '__root__' | '/' | '/proposal-sent'
+  to:
+    | '/'
+    | '/proposal-sent'
+    | '/api/public/catalog-sync'
+    | '/api/public/webhooks/stripe'
+  id:
+    | '__root__'
+    | '/'
+    | '/proposal-sent'
+    | '/api/public/catalog-sync'
+    | '/api/public/webhooks/stripe'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProposalSentRoute: typeof ProposalSentRoute
+  ApiPublicCatalogSyncRoute: typeof ApiPublicCatalogSyncRoute
+  ApiPublicWebhooksStripeRoute: typeof ApiPublicWebhooksStripeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +98,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProposalSentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/catalog-sync': {
+      id: '/api/public/catalog-sync'
+      path: '/api/public/catalog-sync'
+      fullPath: '/api/public/catalog-sync'
+      preLoaderRoute: typeof ApiPublicCatalogSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/webhooks/stripe': {
+      id: '/api/public/webhooks/stripe'
+      path: '/api/public/webhooks/stripe'
+      fullPath: '/api/public/webhooks/stripe'
+      preLoaderRoute: typeof ApiPublicWebhooksStripeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProposalSentRoute: ProposalSentRoute,
+  ApiPublicCatalogSyncRoute: ApiPublicCatalogSyncRoute,
+  ApiPublicWebhooksStripeRoute: ApiPublicWebhooksStripeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
