@@ -22,6 +22,7 @@ export const Route = createFileRoute("/proposal-sent")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  validateSearch: ProposalSentSearch,
   component: ProposalSent,
 });
 
