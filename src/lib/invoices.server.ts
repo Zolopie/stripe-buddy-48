@@ -84,7 +84,9 @@ export async function submitProposalRequest(
 
   const { data: service, error: serviceError } = await supabaseAdmin
     .from('services')
-    .select('id, title, description, price, tier, status, project_timeline, stripe_price_key')
+    .select(
+      'id, title, description, price, tier, status, project_timeline, stripe_price_key, stripe_price_key_live',
+    )
     .eq('id', input.serviceId)
     .maybeSingle();
 
@@ -149,6 +151,9 @@ export async function submitProposalRequest(
   }
 
   const amountInCents = Math.round(Number(service.price) * 100);
+  // Price ids are per-Stripe-account: a test price id is invalid in live mode.
+  // Only use the id synced for this environment; otherwise bill the raw amount.
+  const envPriceId = env === 'live' ? service.stripe_price_key_live : service.stripe_price_key;
   const idempotencyRoot = attemptId ?? `${ipHash}:${service.id}:${Date.now()}`;
 
   try {
@@ -191,8 +196,8 @@ export async function submitProposalRequest(
       {
         customer: customer.id,
         invoice: invoice.id,
-        ...(service.stripe_price_key
-          ? { pricing: { price: service.stripe_price_key }, quantity: 1 }
+        ...(envPriceId
+          ? { pricing: { price: envPriceId }, quantity: 1 }
           : { amount: amountInCents, currency: 'aud' }),
         description: `${service.title} (${service.tier}) — ${service.project_timeline}`,
       } as never,
