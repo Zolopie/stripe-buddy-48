@@ -33,11 +33,11 @@ export const Route = createFileRoute("/")({
         content:
           "A private marketplace of enterprise web development, UI/UX, brand strategy and technology consulting engagements. Request a secure corporate invoice — no public checkout.",
       },
-      { property: "og:title", content: "Meridian Grove — Elite B2B Engagements" },
+      { property: "og:title", content: "Meridian Grove — Elite B2B Web Design & Corporate Consulting" },
       {
         property: "og:description",
         content:
-          "Browse premium enterprise engagements from $500 to $8,000 AUD and request a secure corporate proposal and invoice.",
+          "A private marketplace of enterprise web development, UI/UX, brand strategy and technology consulting engagements. Request a secure corporate invoice — no public checkout.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
