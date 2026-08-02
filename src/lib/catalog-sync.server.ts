@@ -43,9 +43,6 @@ export async function syncCatalogToStripe(env: StripeEnv): Promise<CatalogSyncRe
 
   // Stripe test and live are separate accounts: ids from one are invalid in the
   // other, so each environment gets its own pair of columns.
-  const productColumn = env === 'live' ? 'stripe_product_key_live' : 'stripe_product_key';
-  const priceColumn = env === 'live' ? 'stripe_price_key_live' : 'stripe_price_key';
-
   for (const service of services) {
     const amount = Math.round(Number(service.price) * 100);
     const lookupKey = priceLookupKey(service.id);
