@@ -11,7 +11,9 @@ export const proposalSchema = z.object({
 
 export type ProposalInput = z.infer<typeof proposalSchema>;
 
-export type ProposalResult = { ok: true; invoiceId: string } | { ok: false; error: string };
+export type ProposalResult =
+  | { ok: true; invoiceId: string; hostedInvoiceUrl: string | null }
+  | { ok: false; error: string };
 
 const RATE_LIMIT_WINDOW_MINUTES = 10;
 const RATE_LIMIT_MAX_REQUESTS = 5;
@@ -119,7 +121,11 @@ export async function submitProposalRequest(
       stripe_invoice_id: finalized.id ?? null,
     });
 
-    return { ok: true, invoiceId: finalized.id ?? '' };
+    return {
+      ok: true,
+      invoiceId: finalized.id ?? '',
+      hostedInvoiceUrl: finalized.hosted_invoice_url ?? null,
+    };
   } catch (error) {
     console.error('Invoice creation failed:', error);
     await supabaseAdmin.from('invoice_requests').insert({ ip_hash: ipHash, service_id: service.id });
