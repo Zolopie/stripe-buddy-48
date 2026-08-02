@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { requestSecureProposal } from "@/lib/invoices.functions";
-import { getPaymentsEnvironment } from "@/lib/payments-env";
 import type { ServiceRow } from "@/lib/catalog.server";
 import { formatAud } from "@/lib/format";
 
@@ -57,7 +56,6 @@ export function ProposalModal({ service, onOpenChange }: ProposalModalProps) {
           fullName,
           email,
           company,
-          environment: getPaymentsEnvironment(),
         },
       });
 
@@ -67,11 +65,10 @@ export function ProposalModal({ service, onOpenChange }: ProposalModalProps) {
       }
 
       onOpenChange(false);
-      const env = getPaymentsEnvironment();
       navigate({
         to: "/proposal-sent",
         search:
-          env === "sandbox" && result.hostedInvoiceUrl
+          result.testMode && result.hostedInvoiceUrl
             ? { invoice: result.hostedInvoiceUrl }
             : {},
       });
