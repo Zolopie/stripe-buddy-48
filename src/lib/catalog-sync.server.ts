@@ -106,7 +106,11 @@ export async function syncCatalogToStripe(env: StripeEnv): Promise<CatalogSyncRe
 
       await supabaseAdmin
         .from('services')
-        .update({ [productColumn]: productId, [priceColumn]: priceId })
+        .update(
+          env === 'live'
+            ? { stripe_product_key_live: productId, stripe_price_key_live: priceId }
+            : { stripe_product_key: productId, stripe_price_key: priceId },
+        )
         .eq('id', service.id);
     } catch (syncError) {
       result.failed += 1;
