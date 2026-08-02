@@ -90,7 +90,9 @@ export type Database = {
           project_timeline: string
           status: Database["public"]["Enums"]["service_status"]
           stripe_price_key: string | null
+          stripe_price_key_live: string | null
           stripe_product_key: string | null
+          stripe_product_key_live: string | null
           tier: string
           title: string
         }
@@ -104,7 +106,9 @@ export type Database = {
           project_timeline: string
           status?: Database["public"]["Enums"]["service_status"]
           stripe_price_key?: string | null
+          stripe_price_key_live?: string | null
           stripe_product_key?: string | null
+          stripe_product_key_live?: string | null
           tier: string
           title: string
         }
@@ -118,7 +122,9 @@ export type Database = {
           project_timeline?: string
           status?: Database["public"]["Enums"]["service_status"]
           stripe_price_key?: string | null
+          stripe_price_key_live?: string | null
           stripe_product_key?: string | null
+          stripe_product_key_live?: string | null
           tier?: string
           title?: string
         }
