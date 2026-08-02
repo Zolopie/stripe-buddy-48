@@ -16,31 +16,58 @@ export type Database = {
     Tables: {
       invoice_requests: {
         Row: {
+          amount_cents: number | null
           company: string | null
           created_at: string
+          currency: string
           email: string | null
+          error: string | null
+          full_name: string | null
+          hosted_invoice_url: string | null
           id: string
           ip_hash: string
+          paid_at: string | null
           service_id: string | null
+          status: string
+          stripe_customer_id: string | null
           stripe_invoice_id: string | null
+          updated_at: string
         }
         Insert: {
+          amount_cents?: number | null
           company?: string | null
           created_at?: string
+          currency?: string
           email?: string | null
+          error?: string | null
+          full_name?: string | null
+          hosted_invoice_url?: string | null
           id?: string
           ip_hash: string
+          paid_at?: string | null
           service_id?: string | null
+          status?: string
+          stripe_customer_id?: string | null
           stripe_invoice_id?: string | null
+          updated_at?: string
         }
         Update: {
+          amount_cents?: number | null
           company?: string | null
           created_at?: string
+          currency?: string
           email?: string | null
+          error?: string | null
+          full_name?: string | null
+          hosted_invoice_url?: string | null
           id?: string
           ip_hash?: string
+          paid_at?: string | null
           service_id?: string | null
+          status?: string
+          stripe_customer_id?: string | null
           stripe_invoice_id?: string | null
+          updated_at?: string
         }
         Relationships: [
           {
@@ -62,6 +89,8 @@ export type Database = {
           price: number
           project_timeline: string
           status: Database["public"]["Enums"]["service_status"]
+          stripe_price_key: string | null
+          stripe_product_key: string | null
           tier: string
           title: string
         }
@@ -74,6 +103,8 @@ export type Database = {
           price: number
           project_timeline: string
           status?: Database["public"]["Enums"]["service_status"]
+          stripe_price_key?: string | null
+          stripe_product_key?: string | null
           tier: string
           title: string
         }
@@ -86,6 +117,8 @@ export type Database = {
           price?: number
           project_timeline?: string
           status?: Database["public"]["Enums"]["service_status"]
+          stripe_price_key?: string | null
+          stripe_product_key?: string | null
           tier?: string
           title?: string
         }
